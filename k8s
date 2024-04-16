@@ -1,0 +1,200 @@
+kubernetes is container orcehestration tool 
+
+
+alternatives are 
+SWARM  competitor 
+Nomad  New
+openshift ...not competitor working with kubernates to make it better
+mesos ..
+Kubernates
+
+k8s - Arch—-------------------
+
+client
+control plane 
+data plane (worker,mininon)
+
+
+getting creds—------------
+aws eks --region us-east-1 update-kubeconfig --name roche-eks-cp
+
+
+
+arn:aws:eks:us-east-1:751136288263:cluster/roche-eks-cp   arn:aws:eks:us-east-1:751136288263:cluster/roche-eks-cp   arn:aws:eks:us-east-1:751136288263:cluster/roche-eks-cp
+
+
+
+kubectl version -o yaml
+
+
+Main Process on worker end is Kubelet
+
+
+__________Gives yaml file but doesnt create more like dry run__________
+kubectl run akankshapod2 --image=nginx --port 80 --dry-run=client -o y
+aml
+
+
+
+
+
+
+
+
+
+
+
+
+WE CAN LOGIN INTO PODS
+wa1@VEPMWL422:/mnt/c/Users/wa1/Desktop/Kubernetes-Manifest$ kubectl exec -it akankshapod1 -- bash
+root@akankshapod1:/# ll
+bash: ll: command not found
+root@akankshapod1:/# cat /etc/os-release 
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+root@akankshapod1:/#
+
+
+POD Lifecycle command for kubectl
+
+Get pods
+Delete pods
+Create pods
+Logs pods
+Exec pods
+Describe pods
+
+  372  kubectl get nodes
+  373  kubectl get pods
+  374  cd
+  375  kubectl
+  376  kubectl version
+  377  kubectl version --client -o json
+  378  kubectl version --client -o yaml
+  379  kubectl version --client
+  380  aws configure
+  381  aws eks --region us-east-1 update-kubeconfig --name roche-eks-cp
+  382  kubectl config get-contexts
+  383  kubectl version -o yml
+  384  kubectl version -o yaml
+  385  aws --version
+  386  kubectl cluster-info
+  387  kubectl get nodes
+  388  kubectl get nodes -o wide
+  389  kubectl get pods
+  390  kubectl run akankshapod1 --image=nginx --port 80
+  391  kubectl get pods
+  392  kubectl
+  393  kubectl desctibe pod
+  394  kubectl describe pod
+  395  kubectl describe pod akankshapod1
+  396  kubectl describe pod akankshapod1 -o wide
+  397  kubectl get pods akankshapod1 -o wide
+  398  kubectl delete pods akankshapod1
+  399  kubectl get pods
+  400  cd
+  401  mkdir kubernetes
+  402  cd kubernetes/
+  403  ll
+  404  touch akankshapod.yaml
+  405  vi akankshapod.yaml
+  406  kubectl create -f akankshapod.yaml
+  407  kubectl create -f akankshapod.yaml --validate=false
+  408  ll
+  409  ls
+  410  kubectl create -f akankshapod1.yaml
+  411  kubectl create -f akankshapod1.yaml --validate=false
+  412  kubectl get pods
+  413  kubectl create -f akankshapod1.yaml
+  414*
+  415  ll
+  416*
+  417  kubectl run akankshapod1 --image=nginx --port 80
+  418  kubectl create -f akankshapod1.yaml
+  419  kubectl get pods
+  420*
+  421  kubectl create -f akankshapod1.yaml
+  422  kubectl get pods
+  423  kubectl run akankshapod2 --port 80 --dry-run=client
+  424  kubectl run akankshapod2 --image=nginx --port 80 --dry-run=client
+  425  kubectl run akankshapod2 --image=nginx --port 80 --dry-run=client -o yaml
+  426  kubectl create -f akankshapod2.yaml
+  427  kubectl get pods
+  428  kubectl logs akankshapod1
+  429  kubectl logs akankshapod2
+  430  kubectl exec -it akankshapod1 -- bash
+
+
+
+
+
+
+
+
+
+___________–
+
+kubectl port-forward akankshapod1  1234:80
+
+Can be accessible only until this cmd is running, once interrupted it stops…..
+
+—-------------------
+
+
+
+
+
+
+CREATING DEPLOYEMENT
+
+kubectl create deployment akanksha-deploy --image=nginx --port 80 --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: akanksha-deploy
+  name: akanksha-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: akanksha-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: akanksha-deploy
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+kubectl create deployment akanksha-deploy --image=nginx --port 80 --dry-run=client -o yaml kubectl create -f akankshadeploy.yaml 
+
+            deployment.apps/akanksha-deploy created
+
+
+Scale the pods
+
+ kubectl scale deployment akanksha-deploy --replicas=3
+Kubectl scale deployment deployment-name –replicas=desired scaling no
+
+Fetching manifest file from etcd
+
+ kubectl get deployment akanksha-deploy -o yaml
+
+Edit ETCD manifest directly
+
+Kubectl edit deployment akanksha-deploy changes (--replicas=3)
